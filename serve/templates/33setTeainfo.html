@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>修改教师信息</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        width: 890px;
+        padding-top: 100px;
+        margin: auto;
+    }
+    .tab{
+        width: 890px;
+    }
+    .but{
+        margin: 0 5px;
+    }
+</style>
+<body>
+    <div class="con">
+        <select id="cls">
+            <option value="userid">工号</option>
+            <option value="name">姓名</option>
+            <option value="sex">性别</option>
+            <option value="subject">学科</option>
+        </select>
+        <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button" id="btn">检索</button>
+        </div>
+        <table class="tab table table-bordered table-hover">
+            <tr>
+                <th style="width: 90px">姓名</th>
+                <th style="width: 90px">工号</th>
+                <th style="width: 90px">性别</th>
+                <th style="width: 100px">出生年月</th>
+                <th style="width: 90px">学科</th>
+                <th style="width: 200px">操作</th>
+            </tr>
+            <tbody>
+            {% if results %}
+            {% for item in results %}
+            <tr>
+                <td style="width: 90px">{{ item.name }}</td>
+                <td style="width: 90px">{{ item.userid }}</td>
+                <td style="width: 90px">{{ item.sex }}</td>
+                <td style="width: 100px">{{ item.birthday }}</td>
+                <td style="width: 90px">{{ item.subject }}</td>
+                <td><button class="but updcon btn btn-warning" attrid="{{ item.userid }}">修改此项</button></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6">未搜索到结果</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {{ pag.strs|safe }}
+    </div>
+</body>
+<script>
+    document.querySelector("#btn").onclick=function () {
+        let cls = document.querySelector("#cls").value;
+        let span2 = document.querySelector(".span2").value;
+        span2 ? span2=span2 : span2="1";
+        window.location.href=("get", "/teacherSet/setTeainfo33?cls=" + cls + "&con=" + span2);
+    }
+    let updcon = document.querySelectorAll(".updcon");
+    for (let i = 0; i < updcon.length; i++) {
+        updcon[i].onclick = function () {
+            let userid = updcon[i].getAttribute("attrid");//获取userid
+            let TD = updcon[i].parentNode;
+            let TR = TD.parentNode;
+            let confirm=document.createElement("button");
+            confirm.classList.add("but","btn","btn-success");
+            confirm.setAttribute("attrid",userid);
+            confirm.innerHTML="确认修改";
+            TD.appendChild(confirm);
+            updcon[i].style.visibility="hidden";
+
+            let TDs=TR.childNodes;
+            // 新增输入框1
+            let oldvalue1=TDs[1].innerHTML;
+            let input1=document.createElement("input");
+            TDs[1].innerHTML="";
+            input1.value=oldvalue1;
+            input1.style.width="90px";
+            TDs[1].appendChild(input1);
+            // 新增输入框5
+            let oldvalue5=TDs[5].innerHTML;
+            let input5=document.createElement("input");
+            TDs[5].innerHTML="";
+            input5.value=oldvalue5;
+            input5.style.width="90px";
+            TDs[5].appendChild(input5);
+            // 新增输入框7
+            let oldvalue7=TDs[7].innerHTML;
+            let input7=document.createElement("input");
+            TDs[7].innerHTML="";
+            input7.value=oldvalue7;
+            input7.style.width="100px";
+            TDs[7].appendChild(input7);
+            // 新增输入框9
+            let oldvalue9=TDs[9].innerHTML;
+            let input9=document.createElement("input");
+            TDs[9].innerHTML="";
+            input9.value=oldvalue9;
+            input9.style.width="90px";
+            TDs[9].appendChild(input9);
+
+            confirm.onclick=function () {
+                let name=input1.value;
+                let sex=input5.value;
+                let birthday=input7.value;
+                let subject=input9.value;
+                var ajax = new XMLHttpRequest();
+                ajax.onload = function (ev) {
+                    if (ajax.response == "ok") {
+                        TDs[1].innerHTML=input1.value;
+                        TDs[5].innerHTML=input5.value;
+                        TDs[7].innerHTML=input7.value;
+                        TDs[9].innerHTML=input9.value;
+                        TD.removeChild(confirm);
+                        updcon[i].style.visibility="visible";
+                    }
+                    else {
+                        window.location.href = '/error';
+                    }
+                };
+                ajax.open("get", "/teacherSet/setTeainfo?userid="+userid+"&name="+name+"&sex="+sex+"&birthday="+birthday+"&subject="+subject);
+                ajax.send();
+            }
+        }
+    }
+</script>
+</html></html>

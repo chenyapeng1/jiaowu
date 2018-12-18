@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>管理员工具</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        width: 800px;
+        padding-top: 100px;
+        margin: auto;
+    }
+    .tab{
+        width: 800px;
+    }
+    .but{
+        margin: 0 5px;
+    }
+</style>
+<body>
+    <div class="con">
+        <select id="cls">
+            <option value="userid">账号</option>
+            <option value="name">姓名</option>
+            <option value="role">身份</option>
+            <option value="class">班级</option>
+            <option value="subject">学科</option>
+        </select>
+        <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button" id="btn">检索</button>
+        </div><br>
+        <a class="but addcon btn btn-success" style="margin-bottom: 8px" href="/systemSet/tooladduser">添加用户</a>
+        <a class="but addcon btn btn-success" style="margin-bottom: 8px" href="/systemSet/toolxlsxadd">批量导入</a>
+        <table class="tab table table-bordered table-hover">
+            <tr>
+                <th style="width: 90px">姓名</th>
+                <th style="width: 90px">账号</th>
+                <th style="width: 241px">权限</th>
+                <th style="width: 79px">身份</th>
+                <th style="width: 200px">操作</th>
+            </tr>
+            <tbody id="tbody">
+            {% if results %}
+            {% for item in results %}
+            <tr>
+                <td style="width: 90px">{{ item.name }}</td>
+                <td style="width: 90px">{{ item.userid }}</td>
+                <td style="width: 241px">[{{ item.hwpower }}]&nbsp[{{ item.stupower }}]&nbsp[{{ item.teapower }}]&nbsp[{{ item.clspower }}]&nbsp[{{ item.filepower }}]&nbsp[{{ item.setpower }}]</td>
+                <td style="width: 79px">{{ item.role }}</td>
+                <td><button class="but updcon btn btn-warning" attrid="{{ item.id }}">修改此项</button><button class="but delcon btn btn-danger" attrid="{{ item.id }}">删除此项</button></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5">未搜索到结果</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {{ pag.strs|safe }}
+    </div>
+</body>
+<script>
+    let tbody= document.querySelector("#tbody");
+    document.querySelector("#btn").onclick=function () {
+        let cls = document.querySelector("#cls").value;
+        let span2 = document.querySelector(".span2").value;
+        if(cls=="role"){
+            if(span2=="管理员"){
+                span2="0"
+            }else if(span2=="教师"||span2=="老师"){
+                span2="1"
+            }else if(span2=="学生"){
+                span2="2"
+            }
+        }
+        span2 ? span2=span2 : span2="1";
+        window.location.href=("get", "/systemSet/tool63?cls=" + cls + "&con=" + span2);
+    }
+    let updcon = document.querySelectorAll(".updcon");
+    for(let i=0;i<updcon.length;i++){
+        updcon[i].onclick=function () {
+            let id = this.getAttribute("attrid");
+            window.location.href = '/systemSet/toolupdate?id='+id;
+        }
+    }
+    let delcon = document.querySelectorAll(".delcon");
+    for(let i=0;i<delcon.length;i++){
+        delcon[i].onclick=function () {
+            let id=this.getAttribute("attrid");
+            var ajax = new XMLHttpRequest();
+            ajax.onload = (ev) => {
+                if (ajax.response == "ok") {
+                    tbody.removeChild(delcon[i].parentNode.parentNode)
+                }
+                else {
+                    window.location.href = '/error';
+                }
+            };
+            ajax.open("get","/systemSet/tooldel?id="+id);
+            ajax.send();
+        }
+    }
+</script>
+</html>

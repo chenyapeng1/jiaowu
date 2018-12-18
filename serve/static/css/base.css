@@ -1,0 +1,156 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: inherit;
+}
+img{
+	display: block;
+}
+.iconfont{
+	font-weight: 400;
+}
+.skin{
+	background-color: #2F4050;
+}
+.darkerSkin{
+	background-color: #263949;
+}
+#main{
+    width: 100%;
+    height: 100vh;
+}
+/* scrren<1240 */
+@media only screen and (max-width:1440px){
+   	#main{
+		width: 1440px;
+	}
+}
+#left{
+    width: 220px;
+    height: 100%;
+	position:fixed;
+}
+#logoAndInfo{
+    width: 170px;
+    height: 92px;
+    padding: 33px 25px;
+}
+.logo{
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+.info{
+    margin: 6px 0;
+    color: #FFFFF3;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+}
+.navs{
+	margin-top: 2px;
+}
+#topMenu{
+	height: 60px;
+	margin-left: 220px;
+	background-color: #F3F3F4;
+	border-bottom: 1px solid #999c9e;
+}
+.loginInfo{
+	height: 20px;
+	padding: 20px 30px;
+	float: left;
+}
+.myinfo{
+	height: 20px;
+	margin-right: 5px;
+	color: #999c9e;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+}
+.menus{
+	height: 60px;
+	padding: 0 30px;
+	float: right;
+}
+.mymenu{
+	display: block;
+	float: left;
+	height: 60px;
+	margin-right: 15px;
+	color: #999c9e;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 60px;
+	cursor: pointer;
+}
+.notice{
+	height: 76px;
+	padding: 10px 60px 10px 30px;
+    margin-left: 220px;
+}
+.noticeBottom{
+	height: 2px;
+	margin-left: 220px;
+}
+#blink{
+	font-size: 16px;
+	font-weight: 600;
+}
+#screen{
+	width: 100%;
+	height: 100%;
+}
+/*左侧导航样式*/
+.lmenu{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+.lmenu ul li{
+	position: relative;
+	cursor: pointer;
+}
+.lmenu ul li span{
+	display: block;
+	width: 100%;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	font-weight: 600;
+	color: #FFFFF3;
+}
+.lmenu ul li ul li , .lmenu ul li ul li span{
+	color: #A7B1C2;
+	font-size: 13px;
+	font-weight: 600;
+	height: 32px;
+	line-height: 32px;
+}
+/*上导航样式*/
+.mymenubar{
+	width: 114px;
+	background-color: #F3F3F4;
+	border: 1px solid #999c9e;
+	border-top: 0px;
+	position: absolute;
+	left: 0;
+	display: none;
+}
+.mymenubarCon{
+	width: 100px;
+	height: 20px;
+	padding: 2px 7px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	cursor: pointer;
+}

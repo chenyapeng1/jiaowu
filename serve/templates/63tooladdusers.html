@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>添加用户</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        margin: auto;
+    }
+</style>
+<body>
+    <a href="/systemSet/download">下载xlsx模板</a>
+    <div class="con">
+        <form action="/systemSet/exceladd" method="post">
+            <input type="file" name="excel" id="excel">
+            <input type="submit" value="确认">
+        </form>
+    </div>
+</body>
+
+</html>

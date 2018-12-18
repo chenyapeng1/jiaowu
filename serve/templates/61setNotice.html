@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>修改通知</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        margin: auto;
+        padding-top: 70px;
+        text-align: center;
+    }
+    #textInputer{
+        width: 600px;
+        min-width: 600px;
+        max-width: 1000px;
+        height: 400px;
+        min-height: 300px;
+        max-height: 550px;
+        position: relative;
+    }
+    .but{
+        margin: 0 15px;
+    }
+</style>
+<body>
+    <div class="con">
+        <textarea id="textInputer" onkeyup="checkLength(this,200)"  maxlength="200" data-options="required:true"></textarea>
+        <div>还可以输入<span id="warning">200</span>字</div>
+    </div>
+    <div class="con">
+        <button id="confirm" class="but btn btn-success">发布</button><button id="clear" class="but btn btn-warning">清空</button><a class="but btn btn-danger" href="about:blank">退出</a>
+    </div>
+</body>
+<script>
+    document.querySelector("#clear").onclick=function () {
+        document.querySelector("#textInputer").value=""
+    }
+    document.querySelector("#confirm").onclick=function () {
+        let myDate = new Date();
+        let month = myDate.getMonth()+1;
+        let date = myDate.getFullYear()+"年"+month+"月"+myDate.getDate()+"日"
+
+        var ajax=new XMLHttpRequest();
+        ajax.onload=(ev)=> {
+            if (ajax.response == "ok") {
+                let str="("+date+")"+document.querySelector("#textInputer").value
+                window.parent.document.querySelector("#mynotice").innerHTML=str
+                window.location.href = '/success';
+            }else{
+                window.location.href = '/error';
+            }
+        }
+        ajax.open("get", "/systemSet/setNotice?content="+document.querySelector("#textInputer").value +"&date="+date);
+	    ajax.send()
+    }
+    //监控字数警告
+    let warning = document.querySelector("#warning")
+    function checkLength(obj,maxChars){
+        let content = document.querySelector("#textInputer").value
+        warning.innerText=maxChars-content.length
+    }
+</script>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>修改班级信息</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        width: 540px;
+        padding-top: 100px;
+        margin: auto;
+    }
+    .tab{
+        width: 540px;
+    }
+    .but{
+        margin: 0 5px;
+    }
+</style>
+<body>
+    <div class="con">
+        <select id="cls">
+            <option value="class">班级</option>
+            <option value="master">班主任</option>
+        </select>
+        <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button" id="btn">检索</button>
+        </div>
+        <table class="tab table table-bordered table-hover">
+            <tr>
+                <th style="width: 120px">班级</th>
+                <th style="width: 120px">班主任</th>
+                <th style="width: 160px">操作</th>
+            </tr>
+            <tbody>
+            {% if results %}
+            {% for item in results %}
+            <tr>
+                <td style="width: 120px">{{ item.class }}</td>
+                <td style="width: 120px">{{ item.master }}</td>
+                <td><button class="but updcon btn btn-warning" attrid="{{ item.classid }}">修改信息</button></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6">未搜索到结果</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {{ pag.strs|safe }}
+    </div>
+</body>
+<script>
+    document.querySelector("#btn").onclick=function () {
+        let cls = document.querySelector("#cls").value;
+        let span2 = document.querySelector(".span2").value
+        span2 ? span2 = span2 : span2 = "1"
+        window.location.href = ("get", "/classSet/setClassinfo43?cls=" + cls + "&con=" + span2);
+    }
+    let updcon = document.querySelectorAll(".updcon");
+    for (let i = 0; i < updcon.length; i++) {
+        updcon[i].onclick = function () {
+            let classid = updcon[i].getAttribute("attrid");//获取classid
+            let TD = updcon[i].parentNode;
+            let TR = TD.parentNode;
+            let confirm=document.createElement("button");
+            confirm.classList.add("but","btn","btn-success");
+            confirm.setAttribute("attrid",classid);
+            confirm.innerHTML="确认修改";
+            TD.appendChild(confirm);
+            updcon[i].style.visibility="hidden";
+
+            let TDs=TR.childNodes;
+            // 新增输入框1
+            let oldvalue1=TDs[1].innerHTML;
+            let input1=document.createElement("input");
+            TDs[1].innerHTML="";
+            input1.value=oldvalue1;
+            input1.style.width="120px";
+            TDs[1].appendChild(input1);
+            // 新增输入框3
+            let oldvalue3=TDs[3].innerHTML;
+            let input3=document.createElement("input");
+            TDs[3].innerHTML="";
+            input3.value=oldvalue3;
+            input3.style.width="120px";
+            TDs[3].appendChild(input3);
+
+            confirm.onclick=function () {
+                let newclass=input1.value;
+                let master=input3.value;
+
+                var ajax = new XMLHttpRequest();
+                ajax.onload = function (ev) {
+                    if (ajax.response == "ok") {
+                        TDs[1].innerHTML=input1.value;
+                        TDs[3].innerHTML=input3.value;
+                        TD.removeChild(confirm);
+                        updcon[i].style.visibility="visible";
+                    }else if (ajax.response == "classError"){
+                        TDs[1].innerHTML=oldvalue1;
+                        TDs[3].innerHTML=input3.value;
+                        TD.removeChild(confirm);
+                        updcon[i].style.visibility="visible";
+                    }
+                    else {
+                        window.location.href = '/error';
+                    }
+                };
+                ajax.open("get", "/classSet/setClassinfo?classid="+classid+"&newclass="+newclass+"&oldclass="+oldvalue1+"&master="+master);
+                ajax.send();
+            }
+        }
+    }
+</script>
+</html>

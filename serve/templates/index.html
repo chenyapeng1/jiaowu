@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/fonts/iconfont.css">
+    <script type="text/javascript" src="../static/js/jquery-1.11.1.js"></script>
+    <script src="../static/js/main.js"></script>
+    <title>index</title>
+</head>
+<body>
+    <!--左侧导航-->
+        <div id="left" class="skin">
+            <div id="logoAndInfo" class="darkerSkin">
+                <div class="logo"><img src="../static/img/logo.jpg" alt=""></div>
+                <div class="info">太原市成成中学教务管理系统</div>
+            </div>
+            <div class="navs darkerSkin">
+                <div class="lmenu">
+                    <!--作业管理-->
+                    <ul>
+                        <li aid="1">
+                            <span><i class="iconfont icon-wenjian"></i>&nbsp作业管理</span>
+                            <ul style="display: none;">
+                                <a href="/homeworkSet/homework11" target="screen"><li aid="11">查看作业</li></a>
+                                <a href="/homeworkSet/addHomework12" target="screen"><li aid="12">上交作业</li></a>
+                                <a href="/homeworkSet/updHomework13" target="screen"><li aid="13">修改本用户作业</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--学生管理-->
+                    <ul>
+                        <li aid="2">
+                            <span><i class="iconfont icon-jiaoshi1"></i>&nbsp学生管理</span>
+                            <ul style="display: none;">
+                                <a href="/studentSet/stuinfo21" target="screen"><li aid="21">查看学生信息</li></a>
+                                <a href="/studentSet/setStuinfo22" target="screen"><li aid="22">修改学生信息</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--教师管理-->
+                    <ul>
+                        <li aid="3">
+                            <span><i class="iconfont icon-jiaoshi"></i>&nbsp教师管理</span>
+                            <ul style="display: none;">
+                                <a href="/teacherSet/teainfo31" target="screen"><li aid="31">查看教师信息</li></a>
+                                <a href="teacherSet/addpaper32" target="screen"><li aid="32">扩充题库</li></a>
+                                <a href="/teacherSet/setTeainfo33" target="screen"><li aid="33">修改教师信息</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--班级管理-->
+                    <ul>
+                        <li aid="4">
+                            <span><i class="iconfont icon-banji"></i>&nbsp班级管理</span>
+                            <ul style="display: none;">
+                                <a href="/classSet/classinfo41" target="screen"><li aid="41">查看班级信息</li></a>
+                                <a href="/classSet/test" target="screen"><li aid="42">随堂测试</li></a>
+                                <a href="/classSet/setClassinfo43" target="screen"><li aid="43">修改班级信息</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--试卷管理-->
+                    <ul>
+                        <li aid="5">
+                            <span><i class="iconfont icon-shijuanindex"></i>&nbsp文件管理</span>
+                            <ul style="display: none;">
+                                <a href="javascript:;" target="screen"><li aid="51">可拓展功能项</li></a>
+                                <a href="javascript:;" target="screen"><li aid="52">可拓展功能项</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--系统设置-->
+                    <ul>
+                        <li aid="6">
+                            <span><i class="iconfont icon-chilun"></i>&nbsp系统设置</span>
+                            <ul style="display: none;">
+                                <a href="/systemSet/setNotice61" target="screen"><li aid="61">修改通知</li></a>
+                                <a href="" target="screen"><li aid="62">群发消息</li></a>
+                                <a href="/systemSet/tool63" target="screen"><li aid="63">管理员工具</li></a>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <!--应用主体-->
+    <div id="main">
+        <!--顶部菜单-->
+        <div id="topMenu">
+            <div class="loginInfo">
+                <span class="myinfo">今天是 <span id="time">年月日</span></span>
+                <span class="myinfo">，欢迎 <a href="/myinfo" id="name" target="screen">{{data.name}}</a></span>
+            </div>
+            <div class="skin" style="height: 20px;padding: 20px 30px;float: right;"></div>
+            <div class="menus">
+                <span class="mymenu" id="menu1"><i class="iconfont icon-xiaoxi"></i>&nbsp我的消息</span>
+                <span class="mymenu" id="menu2" style="position: relative">
+                    <i class="iconfont icon-xiaoxi1"></i>&nbsp我的设置
+                    <div class="mymenubar" id="mymenubar2">
+                        <div class="mymenubarCon" style="cursor: auto">皮肤</div>
+                        <div class="segmentingLine" style="width: 90px;height: 1px;margin: auto;background-color: #999c9e;"></div>
+                        <div class="mymenubarCon" id="skin1" style="color: #2F4050">沉静蓝(默认)</div>
+                        <div class="mymenubarCon" id="skin2" style="color: #327732">自然绿</div>
+                        <div class="mymenubarCon" id="skin3" style="color: #9c6728">活力橙</div>
+                        <div class="mymenubarCon" id="skin4" style="color: #6c3a88">魅惑紫</div>
+                        <div class="mymenubarCon" id="skin5" style="color: #999C9E">简约灰</div>
+                    </div>
+                </span>
+                <span class="mymenu" id="menu3" onclick="location.href='/logout'"><i class="iconfont icon-dengchu"></i>&nbsp退出登录</span>
+            </div>
+        </div>
+        <!--通知栏-->
+        <div class="notice">
+            <div id="blink">通知</div>
+            <p id="mynotice" style="height:50px;overflow-y:scroll; overflow-x:hidden;">({{data.day}}){{data.notice}}</p>
+        </div>
+        <div class="noticeBottom skin"></div>
+        <!--工作区-->
+        <div style="width: 1200px;height: 800px;margin-left: 250px;margin-top: 10px">
+            <iframe src="" frameborder="0" name="screen" id="screen"></iframe>
+        </div>
+
+    </div>
+</body>
+</html>

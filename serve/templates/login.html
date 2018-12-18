@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>Login</title>
+</head>
+<style>
+    *{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+    }
+    body {
+        width: 100%;
+        height: 100%;
+        background-image: url("../static/img/loginBackgroundImg1.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .background{
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .signin{
+        width: 100%;
+        height: 300px;
+        padding-top: 200px;
+    }
+    .loginbox{
+        width: 960px;
+        height: 360px;
+        margin: auto;
+    }
+    .left{
+        height: 276px;
+        float: left;
+    }
+    .right{
+        float: right;
+    }
+    .mytitle{
+        padding-top: 10px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: 200;
+    }
+    .welcome{
+        padding-top: 50px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: 400;
+        text-align: center;
+    }
+    .xiaoxun{
+        padding-top: 50px;
+        color: #fff;
+        font-size: 30px;
+        font-weight: 600;
+        text-align: center;
+    }
+    .log{
+        width: 360px;
+        height: 246px;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: #fff;
+        position: relative;
+    }
+    .logtitle{
+        color: #333333;
+        font-size: 24px;
+        font-weight: 400;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+     input{
+         float: right;
+         border: 1px solid #ccc;
+         padding: 7px 0px;
+         border-radius: 3px;
+         padding-left:5px;
+         box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+     }
+    input:focus{
+        border-color: #66afe9;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    }
+    .grop{
+        width: 100%;
+        height: 40px;
+        padding: 10px 0;
+        margin: auto;
+    }
+    .lab{
+        width: 80px;
+        margin-top: 5px;
+        color: #333333;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: right;
+        float: left;
+    }
+</style>
+<body>
+    <div class="background">
+        <div class="signin">
+            <div class="loginbox">
+                <div class="left">
+                    <div class="mytitle">太原市成成中学教务管理系统</div>
+                    <div class="welcome">欢迎使用教务系统</div>
+                    <div class="xiaoxun">明德明理</div>
+                    <div class="xiaoxun">成己成人</div>
+                </div>
+                <div class="right">
+                    <div class="log">
+                        <div class="logtitle">用户登录</div>
+                        <form action="/checklogin" method="post">
+                            <div class="grop">
+                                <div class="lab">账号:</div>
+                                <input type="text" name="userid" id="userid">
+                            </div>
+                            <div class="grop">
+                                <div class="lab">密码:</div>
+                                <input type="password" name="password" id="password">
+                            </div>
+                            <div class="grop">
+                                <div class="lab" id="codes"><img src="/codeimg" alt="" width="120" height="40" style="cursor: pointer"></div>
+                                <input type="text" name="code" id="code">
+                            </div>
+                            <div style="width:100px;margin: auto">
+                                <input type="submit" value="登录" style="width: 100px;margin: auto;color: #333333;font-size: 18px;font-weight: 400;text-align: center;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div style="width: 100%;height: 1px;background-color: #fff;float: left;margin: 20px 0"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector("#codes").onclick=function(){window.location.href = '/login';}
+</script>

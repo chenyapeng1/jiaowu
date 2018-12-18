@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>修改本用户作业</title>
+</head>
+<style>
+    body{
+        width: 1200px;
+        height: 800px;
+        margin: auto;
+    }
+    .con{
+        width: 600px;
+        padding-top: 100px;
+        margin: auto;
+    }
+    .tab{
+        width: 500px;
+    }
+    .btn{
+        margin: 0 5px;
+    }
+</style>
+<body>
+    <div class="con">
+        <select id="cls">
+            <option value="uptime">日期</option>
+        </select>
+        <div class="input-append">
+            <input class="span2" id="appendedInputButton" type="text">
+            <button class="btn" type="button" id="btn">检索</button>
+        </div>
+        <table class="tab table table-bordered table-hover">
+            <tr>
+                <th style="width: 90px">标题</th>
+                <th style="width: 130px">日期</th>
+                <th style="width: 200px">操作</th>
+            </tr>
+            <tbody>
+            {% if results %}
+            {% for item in results %}
+            <tr>
+                <td style="width: 90px">{{ item.title }}</td>
+                <td style="width: 90px">{{ item.uptime }}</td>
+                <td><button class="but btn btn-warning" attrid="{{ item.id }}">修改作业</button><button class="but1 btn btn-danger" attrid="{{ item.id }}">删除作业</button></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="2">未搜索到结果</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {{ pag.strs | safe }}
+    </div>
+</body>
+<script>
+    document.querySelector("#btn").onclick=function () {
+        let cls = document.querySelector("#cls").value;
+        let span2 = document.querySelector(".span2").value
+        span2 ? span2 = span2 : span2 = "1"
+        window.location.href = ("get", "/homeworkSet/updHomework13?cls=" + cls + "&con=" + span2);
+    }
+    let but = document.querySelectorAll(".but")
+    for(let i=0;i<but.length;i++){
+        but[i].onclick=function () {
+            let id = but[i].getAttribute("attrid");
+            window.location.href = ("get", "/homeworkSet/updtheHomework?id="+id);
+        }
+    }
+    let but1 = document.querySelectorAll(".but1")
+    for(let i=0;i<but.length;i++){
+        but1[i].onclick=function () {
+            let id = but1[i].getAttribute("attrid");
+            window.location.href = ("get", "/homeworkSet/delHomework?id="+id);
+        }
+    }
+</script>
+</html>
