@@ -2,6 +2,10 @@ from flask import Blueprint,render_template,request,redirect,make_response,sessi
 import pymysql
 import math
 
+def connect():
+    db = pymysql.connect('localhost', 'root', '123456', 'jiaowu', charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+    return db
+
 def pages(counts,pageNum):
     #couunts总条数，pageNum每页条数
     if request.url.find("?")<0:
@@ -47,8 +51,7 @@ def stuinfo21():
         con = request.args.get("con") or "1"
         if con == "1":
             cls = "1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select name,userid,sex,birthday,class from userinfo where role=2 and ' + cls + '=%s', (con))
         pag = pages(len(cur.fetchall()), 5)
@@ -70,8 +73,7 @@ def setStuinfo22():
         con=request.args.get("con") or "1"
         if con=="1":
             cls="1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select name,userid,sex,birthday,class from userinfo where role=2 and '+cls+'=%s',(con))
         pag = pages(len(cur.fetchall()), 5)
@@ -90,8 +92,7 @@ def setStuinfo():
     sex = request.args.get("sex")
     birthday = request.args.get("birthday")
     clas = request.args.get("clas")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('select classid from classinfo where class=%s', (clas))
     result = cur.fetchone()

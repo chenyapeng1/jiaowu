@@ -3,6 +3,10 @@ import pymysql
 import math
 import math
 
+def connect():
+    db = pymysql.connect('localhost', 'root', '123456', 'jiaowu', charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+    return db
+
 def pages(counts,pageNum):
     #couunts总条数，pageNum每页条数
     if request.url.find("?")<0:
@@ -48,8 +52,7 @@ def teainfo31():
         con = request.args.get("con") or "1"
         if con == "1":
             cls = "1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select name,userid,sex,birthday,subject from userinfo where role=1 and ' + cls + '=%s', (con))
         pag = pages(len(cur.fetchall()), 5)
@@ -71,8 +74,7 @@ def setTeainfo33():
         con=request.args.get("con") or "1"
         if con=="1":
             cls="1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select name,userid,sex,birthday,subject from userinfo where role=1 and ' + cls + '=%s',(con))
         pag = pages(len(cur.fetchall()), 5)
@@ -91,8 +93,7 @@ def setTeainfo():
     sex = request.args.get("sex")
     birthday = request.args.get("birthday")
     subject = request.args.get("subject")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute("update userinfo set name=%s,sex=%s,birthday=%s,subject=%s where userid=%s",(name,sex,birthday,subject,userid))
     db.commit()
@@ -115,8 +116,7 @@ def addpaper():
     answer3 = request.args.get("answer3")
     answer4 = request.args.get("answer4")
     solution = request.args.get("solution")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute("insert into papers (type,question,answer1,answer2,answer3,answer4,solution) values (%s,%s,%s,%s,%s,%s,%s)",(type,question,answer1,answer2,answer3,answer4,solution))
     db.commit()

@@ -11,6 +11,10 @@ ALLOWED_EXTENSIONS = set(['xlsx'])
 
 systemSet=Blueprint("systemSet",__name__)
 
+def connect():
+    db = pymysql.connect('localhost', 'root', '123456', 'jiaowu', charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+    return db
+
 def addsign(str):
     arr=[]
     for item in str:
@@ -58,8 +62,7 @@ def setNotice():
     content = request.args.get('content')
     date = request.args.get('date')
     updataer = session.get("name")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('insert into notice (content,updataer,date) values (%s,%s,%s)', (content,updataer,date))
     db.commit()
@@ -77,8 +80,7 @@ def tool63():
         con = request.args.get("con") or "1"
         if con == "1" and cls != "role":
             cls = "1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select id from userinfo where userid is not null and ' + cls + '=%s',(con))
         pag = pages(len(cur.fetchall()), 10)
@@ -106,8 +108,7 @@ def tooladduser():
 def add():
     # 账号查重
     userid = request.form["userid"]
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('select id from userinfo where userid = %s',(userid))
     result = cur.fetchall()
@@ -167,8 +168,7 @@ def tooldel():
         return render_template('nopower.html')
     else:
         id = request.args.get("id")
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute("delete from userinfo where id=%s", (id))
         db.commit()
@@ -221,8 +221,7 @@ def exceladd():
         for item in range(1, sheet.nrows):
             arr = sheet.row_values(item)
             arr1 = sheet.row_values(item)
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.executemany("insert into userinfo () values()",())
         db.commit()

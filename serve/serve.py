@@ -21,14 +21,15 @@ app.register_blueprint(classSet,url_prefix="/classSet")
 app.register_blueprint(fileSet,url_prefix="/fileSet")
 app.register_blueprint(systemSet,url_prefix="/systemSet")
 
+def connect():
+    db = pymysql.connect('localhost', 'root', '123456', 'jiaowu', charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+    return db
 
 # 错误
 @app.errorhandler(404)
 def error(error):
     return render_template('404.html')
-@app.errorhandler(400)
-def error(error):
-    return render_template('400.html')
+
 # 权限错误
 @app.route('/nopower')
 def nopower():
@@ -44,8 +45,7 @@ def err():
 @app.route('/')
 def index():
     if(session.get("login")=="yes"):
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select * from notice order by id desc limit 1')
         result = cur.fetchone()
@@ -72,8 +72,7 @@ def codeimg():
 @app.route('/checklogin',methods=["POST"])
 def checklogin():
     if (session.get("code") == request.form["code"].lower()):
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
 
         userid=request.form["userid"]
@@ -134,8 +133,7 @@ def setPassword():
     md5.update(password.encode("utf8"))
     password = md5.hexdigest()
     userid=session.get('userid')
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('select * from userinfo where userid=%s and password=%s', (userid, password))
     result = cur.fetchone()
@@ -143,8 +141,7 @@ def setPassword():
     db.close()
     cur.close()
     if(result):
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         newpassword = request.form["inputPassword2"]
         md5 = hashlib.md5()

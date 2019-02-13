@@ -2,6 +2,10 @@ from flask import Blueprint,render_template,request,redirect,make_response,sessi
 import pymysql
 import math
 
+def connect():
+    db = pymysql.connect('localhost', 'root', '123456', 'jiaowu', charset='utf8',cursorclass=pymysql.cursors.DictCursor)
+    return db
+
 def pages(counts,pageNum):
     #couunts总条数，pageNum每页条数
     if request.url.find("?")<0:
@@ -47,8 +51,7 @@ def homework11():
         con = request.args.get("con") or "1"
         if con == "1":
             cls = "1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select * from homework where id is not null and ' + cls + '=%s', (con))
         pag=pages(len(cur.fetchall()), 5)
@@ -62,8 +65,7 @@ def homework11():
 @homeworkSet.route('/homework')
 def homework():
     id = request.args.get("id")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('select * from homework where id =%s', (id))
     data =cur.fetchone()
@@ -80,8 +82,7 @@ def addHomework12():
         return render_template('nopower.html')
     else:
         userid=session.get("userid")
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select userid,class,name from userinfo where userid =%s', (userid))
         data = cur.fetchone()
@@ -97,8 +98,7 @@ def addHomework():
     uptime = request.args.get("uptime")
     text = request.args.get("text")
     clas = request.args.get("clas")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute("insert into homework (userid,name,title,text,uptime,class) values (%s,%s,%s,%s,%s,%s)",(userid,name,title,text,uptime,clas))
     db.commit()
@@ -117,8 +117,7 @@ def updHomework13():
         con = request.args.get("con") or "1"
         if con == "1":
             cls = "1"
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select * from homework where userid =%s and ' + cls + '=%s', (userid,con))
         pag = pages(len(cur.fetchall()), 5)
@@ -137,8 +136,7 @@ def delHomework():
         return render_template('nopower.html')
     else:
         id = request.args.get("id")
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('delete from homework where id =%s', (id))
         db.commit()
@@ -153,8 +151,7 @@ def updHomework():
         return render_template('nopower.html')
     else:
         id = request.args.get("id")
-        db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                             cursorclass=pymysql.cursors.DictCursor)
+        db = connect()
         cur = db.cursor()
         cur.execute('select * from homework where id =%s', (id))
         datas = cur.fetchone()
@@ -168,8 +165,7 @@ def upd():
     title = request.args.get("title")
     text = request.args.get("text")
     print(id,title,text)
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute("update homework set title=%s,text=%s where id=%s",(title,text,id))
     db.commit()
