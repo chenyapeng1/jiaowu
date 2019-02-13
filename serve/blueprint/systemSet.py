@@ -189,8 +189,7 @@ def update(id):
     clspower = addsign(((request.args.get("clspower1") or "") + (request.args.get("clspower2") or "") + (request.args.get("clspower3") or ""))or "0")
     filepower = addsign(((request.args.get("filepower1") or "") + (request.args.get("filepower2") or ""))or "0")
     setpower = addsign(((request.args.get("setpower1") or "") + (request.args.get("setpower2") or "") + (request.args.get("setpower3") or ""))or "0")
-    db = pymysql.connect('localhost', 'root', 'lll555666', 'jiaowu', charset='utf8',
-                         cursorclass=pymysql.cursors.DictCursor)
+    db = connect()
     cur = db.cursor()
     cur.execute('update userinfo set role=%s,hwpower=%s,stupower=%s,teapower=%s,clspower=%s,filepower=%s,setpower=%s where id=%s', (role,hwpower,stupower,teapower,clspower,filepower,setpower,id))
     db.commit()

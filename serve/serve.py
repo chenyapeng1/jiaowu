@@ -49,8 +49,12 @@ def index():
         cur = db.cursor()
         cur.execute('select * from notice order by id desc limit 1')
         result = cur.fetchone()
-        notice = result["content"]
-        day = result["date"]
+        if (result):
+            notice = result["content"]
+            day = result["date"]
+        else:
+            notice = ""
+            day = "无通知"
         db.commit()
         db.close()
         cur.close()
@@ -155,4 +159,5 @@ def setPassword():
     else:
         return render_template('400.html')
 
-app.run()
+if __name__ == "__main__":
+    app.run()
